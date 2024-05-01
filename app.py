@@ -36,13 +36,8 @@ try:
         print(i)
     print("*"*30)
 
-    # # *********************** VISUALIZAR TABELA ATUAL *********************
-    # comando2 = 'DELETE FROM jogador;'
-    # cursor.execute(comando2)
-    # conexao.commit()
-
     # ********************** INSERT JOGADOR ******************************
-    nomeJogador = 'Dato'
+    nomeJogador = 'Tiago'
     posicao = 'Atacante'
     nivel = 8
     status = 'Pendente'
