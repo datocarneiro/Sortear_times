@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 import psycopg2
 # pip install psycopg2 dotenv
 
+# ******************************************* MAIN ********************************************
+# ******************************************* MAIN ********************************************
+
 load_dotenv()
 
 # Parâmetros de conexão com o banco de dados PostgreSQL
