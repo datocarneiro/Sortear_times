@@ -1,25 +1,26 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href='style.css'>
     <meta charset="UTF-8">
-    <img src="{% static 'logo.jpg' %}" alt="logo">
+    <img src="/static/logo.jpg" alt="logo">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELITE FC</title>
     <style>
-        .Pendente { background-color: #f4f476; }
-        .Fora { background-color: #ff7575; }
-        .Dentro { background-color: #3bb03b; }
+        .Pendente { background-color: #f4f476; }   <!--Amarelo-->
+        .Fora { background-color: #ff7575; }       <!--Vermelho-->
+        .Dentro { background-color: #3bb03b; }     <!--Verde-->
     </style>
 </head>
 <body>
-    <h1>ELITE FC</h1>
-    <h3 class="marca">dato®</h3>
-    <h2>Contratar Jogador</h2>
-    <form method="POST" action="{% url 'adicionar_jogador' %}">
-        {% csrf_token %}
+    <body>
+        <h1>ELITE FC</h1>
+        <h3 class="marca">dato®</h3>
+    </body>   
+    <h2>Contratar Jogador</h2>                                                    
+    <form method="POST" action="{{ url_for('adicionar_jogador') }}">
         <label>Nome:
             <input type="text" name="nome" required>
         </label>
@@ -31,24 +32,40 @@
                 <option value="Goleiro">Goleiro</option>
             </select>
         </label>
-        <br>
+      <br>
         <label>Nível:
-            <input type="number" name="nivel" min="0" max="10" required>
+            <input type="number" name="nivel" min="1" max="10" required oninvalid="this.setCustomValidity('O nível deve estar entre 1 e 10')" oninput="this.setCustomValidity('')">
         </label>
         <button type="submit">Adicionar</button>
     </form>
-    <form method="POST" action="{% url 'sortear' %}">
+    <form method="POST" action="{{ url_for('sortear') }}">
         <button class="botao-sortear" type="submit" name="sortear_times">Sortear Times</button>
     </form>
 
-    <form id="resetarForm" method="POST" action="{% url 'resetar_status' %}" onsubmit="return validarSenha()">
-        {% csrf_token %}
+    <form id="resetarForm" method="POST" action="{{ url_for('resetar_status') }}" onsubmit="return validarSenha()">
         <button type="submit" name="resetar_status">Resetar Status</button>
         <label for="senha">Senha Admin:</label>
         <input type="password" name="senha" id="senha" required placeholder="Digite a senha">
     </form>
     <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
 
+    <script>
+        function validarSenha() {
+            var senhaDigitada = document.getElementById('senha').value;
+            var senhaCorreta = "123"; // Sua senha correta
+
+            if (senhaDigitada !== senhaCorreta) {
+                document.getElementById('senhaAlerta').style.display = 'inline';
+                document.getElementById('senha').value = ''; // Limpa o campo senha
+                return false;  // Impede o envio do formulário
+            } else {
+                return true;  // Permite o envio do formulário para o backend
+            }
+        }
+    </script>
+
+
+   
     <table border="1">
         <tr>
             <th>Nome</th>
@@ -58,29 +75,60 @@
         </tr>
         {% for jogador in jogadores %}
         <tr>
-            <td>{{ jogador.nomeJogador|upper }}</td>
+            <td>{{ jogador.nome|upper }}</td>
             <td>{{ jogador.posicao }}</td>
             <td class="{{ jogador.status }}">{{ jogador.status }}</td>
             <td>
-                <form method="POST" action="{% url 'mudar_status' nome=jogador.nomeJogador %}">
-                    {% csrf_token %}
+                {% if jogador.status == 'Pendente' %}
+                <form method="POST" action="{{ url_for('mudar_status', nome=jogador.nome) }}">
                     <select name="novo_status">
-                        {% if jogador.status == 'Pendente' %}
                         <option value="Dentro">Dentro</option>
                         <option value="Fora">Fora</option>
-                        {% elif jogador.status == 'Dentro' %}
-                        <option value="Pendente">Pendente</option>
-                        <option value="Fora">Fora</option>
-                        {% else %}
-                        <option value="Pendente">Pendente</option>
-                        <option value="Dentro">Dentro</option>
-                        {% endif %}
                     </select>
                     <button type="submit">Confirmar</button>
                 </form>
+                {% elif jogador.status == 'Dentro' %}
+                <form method="POST" action="{{ url_for('mudar_status', nome=jogador.nome) }}">
+                    <select name="novo_status">
+                        <option value="Pendente">Pendente</option>
+                        <option value="Fora">Fora</option>
+                    </select>
+                    <button type="submit">Confirmar</button>
+                </form>
+                {% else %}
+                <form method="POST" action="{{ url_for('mudar_status', nome=jogador.nome) }}">
+                    <select name="novo_status">
+                        <option value="Pendente">Pendente</option>
+                        <option value="Dentro">Dentro</option>
+                    </select>
+                    <button type="submit">Confirmar</button>
+                </form>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
     </table>
+    <form id="resetarForm" method="POST" action="{{ url_for('excluir_jogador') }}" onsubmit="return validarSenha()"></form>
+        <button type="submit">Excluir Jogador</button>
+        <label for="nome">:</label>
+        <input type="text" id="nome" name="nome" required>
+   
+    </form>
+    <script>
+        function validarSenha() {
+            var senhaDigitada = document.getElementById('senha').value;
+            var senhaCorreta = "123"; // Sua senha correta
+
+            if (senhaDigitada !== senhaCorreta) {
+                document.getElementById('senhaAlerta').style.display = 'inline';
+                document.getElementById('senha').value = ''; // Limpa o campo senha
+                return false;  // Impede o envio do formulário
+            } else {
+                return true;  // Permite o envio do formulário para o backend
+            }
+        }
+    </script>
+
+
 </body>
 </html>
