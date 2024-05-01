@@ -23,21 +23,26 @@ try:
         host=host,
         port=port
     )
-    print("Conexão estabelecida com sucesso!")
+    print("Conexão estabelecida com sucesso AO BANCO DE DADOS!")
     
     # Aqui você pode executar consultas, inserções, etc. Exemplo:
     cursor = conexao.cursor()
 
+    # *********************** VISUALIZAR TABELA ATUAL *********************
+    comando = 'SELECT * FROM jogador;'
+    cursor.execute(comando)
+    resultado = cursor.fetchall() #ler
+    for i in resultado:
+        print(i)
+    print("*"*30)
+
     # # *********************** VISUALIZAR TABELA ATUAL *********************
-    # comando = 'SELECT * FROM jogador;'
-    # cursor.execute(comando)
-    # resultado = cursor.fetchall() #ler
-    # for i in resultado:
-    #     print(i)
-    # print("*"*30)
+    # comando2 = 'DELETE FROM jogador;'
+    # cursor.execute(comando2)
+    # conexao.commit()
 
     # ********************** INSERT JOGADOR ******************************
-    nomeJogador = 'Tiago'
+    nomeJogador = 'Dato'
     posicao = 'Atacante'
     nivel = 8
     status = 'Pendente'
@@ -46,11 +51,19 @@ try:
     cursor.execute(comando, valores)
     conexao.commit()
 
+    # *********************** VISUALIZAR TABELA ATUAL *********************
+    comando = 'SELECT * FROM jogador;'
+    cursor.execute(comando)
+    resultado = cursor.fetchall() #ler
+    for i in resultado:
+        print(i)
+    print("*"*30)
+
     cursor.close()
     conexao.close()
     
 except psycopg2.Error as e:
-    print("Erro ao conectar ao PostgreSQL:", e)
+    print("Erro ao conectar ao bANCO DE DADOS:", e)
 
 
 
