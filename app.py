@@ -1,22 +1,21 @@
 # Add these at the top of your settings.py
 from os import getenv
 from dotenv import load_dotenv
+import psycopg2
+# pip install psycopg2 dotenv
 
 load_dotenv()
 
-# pip install psycopg2
-import psycopg2
-
 # Parâmetros de conexão com o banco de dados PostgreSQL
-dbname = 'elitefc'
-user = 'elitefc_owner'
-password = 'JZmq8x7rPHMf'
-host = 'ep-fancy-salad-a5y97w8t.us-east-2.aws.neon.tech'
-port = '5432'  # Porta padrão do PostgreSQL
+dbname = getenv('PGDATABASE')
+user = getenv('PGUSER')
+password = getenv('PGPASSWORD')
+host = getenv('PGHOST')
+port = getenv('PGPORT')
 
 # Tentativa de conexão
 try:
-    conn = psycopg2.connect(
+    conexao = psycopg2.connect(
         dbname=dbname,
         user=user,
         password=password,
@@ -26,16 +25,53 @@ try:
     print("Conexão estabelecida com sucesso!")
     
     # Aqui você pode executar consultas, inserções, etc. Exemplo:
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM jogador")
-    rows = cursor.fetchall() # leitura saida da query
-    rows = cursor.commit() # gravar da query
+    cursor = conexao.cursor()
 
-    for row in rows:
-        print(row)
+    # # *********************** VISUALIZAR TABELA ATUAL *********************
+    # comando = 'SELECT * FROM jogador;'
+    # cursor.execute(comando)
+    # resultado = cursor.fetchall() #ler
+    # for i in resultado:
+    #     print(i)
+    # print("*"*30)
+
+    # ********************** INSERT JOGADOR ******************************
+    nomeJogador = 'Tiago'
+    posicao = 'Atacante'
+    nivel = 8
+    status = 'Pendente'
+    comando = 'INSERT INTO jogador(nomeJogador, posicao, nivel, status) VALUES (%s, %s, %s,%s)'
+    valores = (nomeJogador, posicao, nivel, status)
+    cursor.execute(comando, valores)
+    conexao.commit()
+
     cursor.close()
-    conn.close()
+    conexao.close()
     
-
 except psycopg2.Error as e:
     print("Erro ao conectar ao PostgreSQL:", e)
+
+
+
+
+# # ********************** INSERT JOGADOR ******************************
+# nomeJogador = 'Joao'
+# posicao = "Atacante"
+# nivel = 8
+# comando = f'INSERT INTO jogador(nomeJogador, posicao, nivel) VALUES ("{nomeJogador}", "{posicao}", "{nivel}")'
+# cursor.execute(comando)
+# conexao.commit() # editar
+
+# # ********************** DELETE JOGADOR *******************************
+# nomeJogador = "Dato"
+# comando = f'DELETE FROM jogador WHERE nomeJogador = "{nomeJogador}"'
+# cursor.execute(comando)
+# conexao.commit()
+
+# *********************** UPDATE JOGADOR ***********************************
+# nomeJogador = "Joao"
+# nivel = 10
+# status = "Pendente"
+# comando = f'UPDATE jogador SET status = "{status}" WHERE nomeJogador = "{nomeJogador}"'
+# cursor.execute(comando)
+# conexao.commit()
