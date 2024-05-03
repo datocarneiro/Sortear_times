@@ -16,6 +16,8 @@ password = getenv('PGPASSWORD')
 host = getenv('PGHOST')
 port = getenv('PGPORT')
 
+senha_correta = "123" # 
+
 # # ****************************** ROTAS PRONTAS **************************************
 app = Flask(__name__)
 
@@ -71,11 +73,13 @@ def index():
 @app.route('/adicionar_jogador', methods=['POST'])
 def adicionar_jogador():
     if request.method == 'POST':
-        nome = request.form['nome']
+        nomeRecebido = request.form['nome']
+        nome = nomeRecebido.strip().capitalize()
         posicao = request.form['posicao']
         nivel = request.form['nivel']
         status = "Pendente"
-
+        print(f'nome adicionado ..... ',nomeRecebido)
+        print(f'nome adicionado ..... ',nome)
         # Tentativa de conexão
         try:
             conexao = psycopg2.connect(
@@ -108,6 +112,8 @@ def excluir_jogador():
         # Obter o nome do jogador do formulário
         nome_jogador = request.form['nome']
         senha_digitada = request.form.get('senha')
+
+        print(nome_jogador , senha_digitada, senha_correta)
     
         if senha_digitada == senha_correta:
 
@@ -175,13 +181,15 @@ def mudar_status(nome):
 
     return redirect(url_for('index'))
 
-# *********************************************** RESETAR STATUS **************************************************************
-senha_correta = "123" # Defina a senha correta
+# # *********************************************** RESETAR STATUS **************************************************************
+# senha_correta = "123" # Defina a senha correta
 
 @app.route('/resetar', methods=['POST'])
 def resetar_status():
     senha_digitada = request.form.get('senha')
-    
+    print(f'senha digitada.......', senha_digitada)
+    print(f'senha correta.......', senha_correta)
+
     if senha_digitada == senha_correta:
         # Tentativa de conexão
         try:
@@ -194,21 +202,27 @@ def resetar_status():
             )
             cursor = conexao.cursor()
 
-            comando = 'UPDATE jogador SET status = "Pendente"'
-            cursor.execute(comando)
+            # Use instrução parametrizada
+            comando = 'UPDATE jogador SET status = %s'
+            cursor.execute(comando, ('Pendente',))  # Use uma tupla para os parâmetros
+
             conexao.commit()
 
             cursor.close()  # fecha cursor
             conexao.close()  # fecha conexão
 
+            return redirect(url_for('index'))
+
         except psycopg2.Error as e:
             print("Erro ao conectar ao BANCO DE DADOS:", e)
 
-        return redirect(url_for('index'))
+            # Se ocorrer um erro, você pode querer redirecionar para uma página de erro
+            return redirect(url_for('erro'))
 
     else:
         # Senha incorreta, redirecionar de volta à página index
         return redirect(url_for('index'))
+
 
 
 @app.route('/sortear', methods=['POST'])

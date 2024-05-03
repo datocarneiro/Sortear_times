@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href='style.css'>
     <meta charset="UTF-8">
     <img src="/static/logo.jpg" alt="logo">
     <meta charset="UTF-8">
@@ -11,63 +10,50 @@
     <style>
         .Pendente { background-color: #f4f476; }   <!--Amarelo-->
         .Fora { background-color: #ff7575; }       <!--Vermelho-->
-        .Dentro { background-color: #3bb03b; }     <!--Verde-->
+        .Dentro { background-color: #1a7c1a;color: white; }     <!--Verde-->
     </style>
 </head>
 <body>
-    <body>
-        <h1>ELITE FC</h1>
-        <h3 class="marca">dato®</h3>
-    </body>   
-    <h2>Contratar Jogador</h2>                                                    
-    <form method="POST" action="{{ url_for('adicionar_jogador') }}">
-        <label>Nome:
-            <input type="text" name="nome" required>
-        </label>
-        <label>Posição:
-            <select name="posicao" required>
+    <h1 class="titulo">ELITE FC</h1>
+    <h3 class="marca">dato®</h3>
+    <h2 class="adicionar">Adicionar Jogador</h2>                                                    
+    <form class="formadd" method="POST" action="{{ url_for('adicionar_jogador') }}">
+        <div class="form-row">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="nivel">Nível:</label>
+            <select id="nivel" name="nivel" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="posicao">Posição:</label>
+            <select id="posicao" name="posicao" required>
                 <option value="Zagueiro">Zagueiro</option>
                 <option value="Meia">Meia</option>
                 <option value="Atacante">Atacante</option>
-                <option value="Goleiro">Goleiro</option>
-            </select>
-        </label>
-      <br>
-        <label>Nível:
-            <input type="number" name="nivel" min="1" max="10" required oninvalid="this.setCustomValidity('O nível deve estar entre 1 e 10')" oninput="this.setCustomValidity('')">
-        </label>
-        <button type="submit">Adicionar</button>
+                <option value="Goleiro">Goleiro</option>                              
+            </select> 
+            <button type="submit" class="btadd">Adicionar</button> 
+        </div>
     </form>
     <form method="POST" action="{{ url_for('sortear') }}">
         <button class="botao-sortear" type="submit" name="sortear_times">Sortear Times</button>
     </form>
 
-    <form id="resetarForm" method="POST" action="{{ url_for('resetar_status') }}" onsubmit="return validarSenha()">
-        <button type="submit" name="resetar_status">Resetar Status</button>
-        <label for="senha">Senha Admin:</label>
-        <input type="password" name="senha" id="senha" required placeholder="Digite a senha">
-    </form>
-    <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
-
-    <script>
-        function validarSenha() {
-            var senhaDigitada = document.getElementById('senha').value;
-            var senhaCorreta = "123"; // Sua senha correta
-
-            if (senhaDigitada !== senhaCorreta) {
-                document.getElementById('senhaAlerta').style.display = 'inline';
-                document.getElementById('senha').value = ''; // Limpa o campo senha
-                return false;  // Impede o envio do formulário
-            } else {
-                return true;  // Permite o envio do formulário para o backend
-            }
-        }
-    </script>
 
 
-   
     <table border="1">
-        <tr>
+        <tr class="cabecalho">
             <th>Nome</th>
             <th>Posição</th>
             <th>Status</th>
@@ -75,7 +61,7 @@
         </tr>
         {% for jogador in jogadores %}
         <tr>
-            <td>{{ jogador.nome|upper }}</td>
+            <td>{{ jogador.nome}}</td>
             <td>{{ jogador.posicao }}</td>
             <td class="{{ jogador.status }}">{{ jogador.status }}</td>
             <td>
@@ -108,14 +94,23 @@
         </tr>
         {% endfor %}
     </table>
-    <form id="resetarForm" method="POST" action="{{ url_for('excluir_jogador') }}" onsubmit="return validarSenha()"></form>
-        <button type="submit">Excluir Jogador</button>
-        <label for="nome">:</label>
-        <input type="text" id="nome" name="nome" required>
-   
+
+    <form id="acaoForm" method="POST" action="{{ url_for('resetar_status') }}">
+        <button type="submit" name="acao" value="resetar" class="btresetar">Resetar Status</button>
+        <button type="submit" name="acao" value="excluir" class="btexcluir">Excluir Jogador</button>
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
+        <div id="excluirInput" style="display: none;">
+            <input type="text" name="nome" id="nome" required placeholder="Digite o nome do jogador">
+        </div>
+            <div id="resetarInput" style="display: none;">
+        </div>
     </form>
+    <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
+
     <script>
-        function validarSenha() {
+        document.getElementById("acaoForm").onsubmit = function() {
+            var acao = document.querySelector('input[name="acao"]:checked').value;
             var senhaDigitada = document.getElementById('senha').value;
             var senhaCorreta = "123"; // Sua senha correta
 
@@ -124,9 +119,26 @@
                 document.getElementById('senha').value = ''; // Limpa o campo senha
                 return false;  // Impede o envio do formulário
             } else {
+                if (acao === 'excluir') {
+                    var nomeJogador = document.getElementById('nome').value;
+                    if (!nomeJogador) {
+                        alert("Por favor, informe o nome do jogador.");
+                        return false;  // Impede o envio do formulário
+                    }
+                }
                 return true;  // Permite o envio do formulário para o backend
             }
-        }
+        };
+
+        document.querySelector('.btexcluir').addEventListener('click', function() {
+            document.getElementById('excluirInput').style.display = 'block';
+            document.getElementById('acaoForm').action = "{{ url_for('excluir_jogador') }}";
+        });
+
+        document.querySelector('.btresetar').addEventListener('click', function() {
+            document.getElementById('resetarInput').style.display = 'none';
+            document.getElementById('acaoForm').action = "{{ url_for('resetar_status') }}";
+        });
     </script>
 
 
