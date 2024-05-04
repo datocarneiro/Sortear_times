@@ -95,22 +95,27 @@
         {% endfor %}
     </table>
 
+
     <form id="acaoForm" method="POST" action="{{ url_for('resetar_status') }}">
         <button type="submit" name="acao" value="resetar" class="btresetar">Resetar Status</button>
+        <div id="resetarInput" style="display: none;">        
+            <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
+            <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
+        </div>
+    </form>  
+
+    <form id="acaoForm" method="POST" action="{{ url_for('excluir_jogador') }}">
         <button type="submit" name="acao" value="excluir" class="btexcluir">Excluir Jogador</button>
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
         <div id="excluirInput" style="display: none;">
             <input type="text" name="nome" id="nome" required placeholder="Digite o nome do jogador">
+            <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
+            <span id="nomeAlerta" style="color: red; display: none;">Por favor, informe o nome do jogador.</span>
         </div>
-            <div id="resetarInput" style="display: none;">
-        </div>
-    </form>
-    <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
-
+        
+    </form>  
     <script>
         document.getElementById("acaoForm").onsubmit = function() {
-            var acao = document.querySelector('input[name="acao"]:checked').value;
+            var acao = document.querySelector('button[name="acao"]:hover').value; // Botão atualmente selecionado
             var senhaDigitada = document.getElementById('senha').value;
             var senhaCorreta = "123"; // Sua senha correta
 
@@ -122,7 +127,7 @@
                 if (acao === 'excluir') {
                     var nomeJogador = document.getElementById('nome').value;
                     if (!nomeJogador) {
-                        alert("Por favor, informe o nome do jogador.");
+                        document.getElementById('nomeAlerta').style.display = 'inline';
                         return false;  // Impede o envio do formulário
                     }
                 }
@@ -132,11 +137,13 @@
 
         document.querySelector('.btexcluir').addEventListener('click', function() {
             document.getElementById('excluirInput').style.display = 'block';
+            document.getElementById('resetarInput').style.display = 'none';
             document.getElementById('acaoForm').action = "{{ url_for('excluir_jogador') }}";
         });
 
         document.querySelector('.btresetar').addEventListener('click', function() {
             document.getElementById('resetarInput').style.display = 'none';
+            document.getElementById('resetarInput').style.display = 'block';
             document.getElementById('acaoForm').action = "{{ url_for('resetar_status') }}";
         });
     </script>
