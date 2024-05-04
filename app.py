@@ -384,4 +384,5 @@ def realizar_sorteio():
 
 if __name__ == '__main__':
     # Ativa o modo de depuração para reiniciar automaticamente o servidor em caso de alterações no código
-    app.run(host='0.0.0.0', port=9090, debug=True)
+    port = int(os.getenv('PORT', 10000))  # Use a porta definida pela variável de ambiente PORT, ou 9090 se não estiver definida
+    app.run(host='0.0.0.0', port=port)
