@@ -1,0 +1,165 @@
+body {
+  position: relative;
+  color: #02051b;
+  margin: 0;
+  padding: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4W6OxOZIA1CpY1nRkX_6blfjXkQbAslTHh-dZGc2JoxyUbfvDRUYA2fXvG8dFAWFr04&usqp=CAU");
+  background-size: cover;
+  opacity: 0.3;
+}
+
+img {
+  float: left;
+  margin-right: 10px;
+  width: 1.3cm;
+  height: 1.3cm;
+  border-radius: 50%;
+  box-shadow: 20px 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+.Pendente {
+  background-color: #f7f719;
+  align-items: center;
+}
+
+.Fora {
+  background-color: #ee0000; /* verde */
+  color: white;
+  align-items: center;
+}
+
+
+.Dentro {
+  background-color: #1a7c1a; /* verde */
+  color: rgb(255, 255, 255);
+  align-items: center;
+}
+
+.marca {
+  padding: 5px;
+  float: center;
+  font-size: 10px;
+  display: inline;
+}
+
+h1 {
+  display: inline;
+  margin-left: 20px;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.botao-sortear {
+  align-items: center;
+  background-color: #1a7c1a; /* verde */
+  color: white;
+  margin: 7px;
+  margin-left: 30px;
+  padding: 7px 130px;
+  border: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap; /* Impede a quebra de linha */
+}
+
+.titulo{
+  font-size: 30px;
+  text-align: center;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+.adicionar{
+  margin-left: 70px;
+  margin: 2px;
+  font-size: 15px;
+  border: 1px;
+  padding-inline: center;
+}
+
+/* Estilo para o formulário de adição */
+.formadd {
+  display: flex;
+  flex-direction: column;
+}
+/* Estilo para as linhas do formulário */
+.formadd .form-row {
+  display: flex;
+  margin-bottom: 1px; /* Espaço entre as linhas */
+}
+
+/* Estilo para as etiquetas */
+.formadd label {
+  margin-right: 10px;
+}
+
+/* Estilo para os campos de entrada */
+/* Estilo para os campos de entrada e o botão */
+.formadd input{
+  margin-right: 8px;
+  padding: 4px 20px;}
+.formadd select{
+    margin-right: 20px;
+    padding: 4px 8px;
+}
+.btadd{
+  background-color: #000000; /* verde */
+  color: white;
+  padding: 7px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 80px;
+}
+
+
+table{
+  width: 90%;
+}
+.btexcluir, .btresetar {
+  font-size: 9px;
+  padding: 5px 10px; /* Reduzi o padding para tornar os botões menores */
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  color: white;
+  display: flex;
+  width: 80px; 
+  white-space: nowrap; /* Evita que o texto quebre para uma nova linha */
+}
+.btexcluir {
+  background-color: rgb(255, 0, 0);
+  border: 1px solid #6d1c1c; 
+}
+.btresetar{
+    background-color: #164d72; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto do botão */
+    border: 1px solid #023658; 
+}
+
+
+/* Flex container para os botões dentro da célula "Ações" */
+td form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo específico para o botão de confirmação */
+.confirmar {
+  margin-left: 5px; /* Ajuste conforme necessário */
+}
+
