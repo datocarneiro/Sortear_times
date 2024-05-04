@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from random import shuffle
 # pip install psycopg2 dotenv
 # ******************************************* DEVELOP ********************************************
-# ******************************************* DEVELOP ********************************************
+# ******************************************* DEVELOP ******************************************** 
 load_dotenv()
 
 # Parâmetros de conexão com o banco de dados PostgreSQL

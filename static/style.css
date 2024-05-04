@@ -64,7 +64,7 @@ hr {
   margin: 7px;
   margin-left: 30px;
   padding: 7px 130px;
-  border: none;
+  border: 10px;
   border-radius: 5px;
   cursor: pointer;
   white-space: nowrap; /* Impede a quebra de linha */
@@ -124,22 +124,28 @@ hr {
 table{
   width: 90%;
 }
-.btexcluir{
-  background-color: rgb(255, 62, 62);
-  color: white;
-  padding: 2px 5px;
+.btexcluir, .btresetar {
+  font-size: 9px;
+  padding: 5px 10px; /* Reduzi o padding para tornar os botões menores */
   border: none;
   border-radius: 5px;
-  margin-top: 10px;
+  margin: 5px;
+  color: white;
+  display: flex;
+  width: 80px; 
+  white-space: nowrap; /* Evita que o texto quebre para uma nova linha */
+}
+.btexcluir {
+  background-color: rgb(255, 0, 0);
+  border: 1px solid #6d1c1c; 
 }
 .btresetar{
-  background-color: rgb(86, 134, 179);
-  padding: 4px 5px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  color: white;
+    background-color: #164d72; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto do botão */
+    border: 1px solid #023658; 
 }
+
+
 /* Flex container para os botões dentro da célula "Ações" */
 td form {
   display: flex;
