@@ -60,7 +60,7 @@ def carregar_jogadores():
     except psycopg2.Error as e:
         print("Erro ao conectar ao BANCO DE DADOS:", e)
 
-####################################################################################################################################
+##########################################################################################################################
 # *************************************************************** INDEX **************************************************
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -109,6 +109,7 @@ def adicionar_jogador():
 # ********************************************************** EXCLUIR JOGADOR ***********************************************
 @app.route('/excluir_jogador', methods=['POST'])
 def excluir_jogador():
+    
     if request.method == 'POST':
         # Obter o nome do jogador do formulário
         nome_jogador = request.form['nome']
