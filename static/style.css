@@ -28,16 +28,21 @@ img {
 }
 
 .Pendente {
-  background-color: #f4f476;
+  background-color: #f7f719;
+  align-items: center;
 }
 
 .Fora {
-  background-color: #ff7575;
+  background-color: #ee0000; /* verde */
+  color: white;
+  align-items: center;
 }
+
 
 .Dentro {
   background-color: #1a7c1a; /* verde */
-  color: white;
+  color: rgb(255, 255, 255);
+  align-items: center;
 }
 
 .marca {
