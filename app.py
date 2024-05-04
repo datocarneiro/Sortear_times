@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import psycopg2
 from flask import Flask, render_template, request, redirect, url_for
 from random import shuffle
-# pip install psycopg2 dotenv
+# pip install python-dotenv psycopg2 Flask
 
 # ******************************************* MAIN ********************************************
 # ******************************************* MAIN ********************************************
@@ -60,7 +60,7 @@ def carregar_jogadores():
     except psycopg2.Error as e:
         print("Erro ao conectar ao BANCO DE DADOS:", e)
 
-####################################################################################################################################
+##########################################################################################################################
 # *************************************************************** INDEX **************************************************
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -109,6 +109,7 @@ def adicionar_jogador():
 # ********************************************************** EXCLUIR JOGADOR ***********************************************
 @app.route('/excluir_jogador', methods=['POST'])
 def excluir_jogador():
+    
     if request.method == 'POST':
         # Obter o nome do jogador do formulário
         nome_jogador = request.form['nome']
@@ -384,4 +385,5 @@ def realizar_sorteio():
 
 if __name__ == '__main__':
     # Ativa o modo de depuração para reiniciar automaticamente o servidor em caso de alterações no código
-    app.run(host='0.0.0.0', port=9090, debug=True)
+    port = int(os.getenv('PORT', 10000))  # Use a porta definida pela variável de ambiente PORT, ou 9090 se não estiver definida
+    app.run(host='0.0.0.0', port=port)
