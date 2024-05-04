@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import psycopg2
 from flask import Flask, render_template, request, redirect, url_for
 from random import shuffle
-# pip install psycopg2 dotenv
+# pip install python-dotenv psycopg2 Flask
 
 # ******************************************* MAIN ********************************************
 # ******************************************* MAIN ********************************************
