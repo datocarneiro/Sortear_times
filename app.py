@@ -54,7 +54,6 @@ def carregar_jogadores():
         cursor.close() # fecha cursor
         conexao.close() # fecha conexão
 
-        print(resultado)
         return resultado
         
     except psycopg2.Error as e:
@@ -296,8 +295,8 @@ def realizar_sorteio():
             jogadores_dentro.sort(
                 key=lambda x: (posicoes_desejadas.index(x['posicao']), x['nivel']))
 
-            # Dividir jogadores por nota e posição
-            jogadores_dentro.sort(key=lambda x: (x['nivel'], x['posicao']))
+            # Dividir jogadores por  posição primeiro e depois nivel
+            jogadores_dentro.sort(key=lambda x: (x['posicao'], x['nivel']))
 
             # # Dividir jogadores em dois times, garantindo equilíbrio nas notas e posições
             # time1 = jogadores_dentro[::2]
@@ -384,6 +383,6 @@ def realizar_sorteio():
 
 
 if __name__ == '__main__':
-    # Ativa o modo de depuração para reiniciar automaticamente o servidor em caso de alterações no código
-    port = int(os.getenv('PORT', 10000))  # Use a porta definida pela variável de ambiente PORT, ou 9090 se não estiver definida
-    app.run(host='0.0.0.0', port=port)
+    # # Ativa o modo de depuração para reiniciar automaticamente o servidor em caso de alterações no código
+    # port = int(os.getenv('PORT', 10000))  # Use a porta definida pela variável de ambiente PORT, ou 9090 se não estiver definida
+    app.run(host='0.0.0.0', port=9090)
