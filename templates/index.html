@@ -51,6 +51,34 @@
     </form>
 
 
+    <form id="atualizarForm" method="POST" action="{{ url_for('atualizar_jogador') }}">
+        <button type="submit" name="acao" value="atualizar" class="btatualizar">Atualizar Jogador</button>
+        <div id="atualizarInput" style="display: none;">
+            <input type="text" name="nome" id="nome" required placeholder="Digite o nome do jogador">
+            <select name="nova_posicao" id="nova_posicao" required>
+                <option value="Zagueiro">Zagueiro</option>
+                <option value="Meia">Meia</option>
+                <option value="Atacante">Atacante</option>
+                <option value="Goleiro">Goleiro</option>                              
+            </select> 
+            <select name="novo_nivel" id="novo_nivel" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
+            <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
+        </div>        
+    </form>  
+    
+
 
     <table border="1">
         <tr class="cabecalho">
@@ -144,6 +172,13 @@
             document.getElementById('resetarInput').style.display = 'block';
             document.getElementById('acaoForm').action = "{{ url_for('resetar_status') }}";
         });
+        document.querySelector('.btatualizar').addEventListener('click', function() {
+            document.getElementById('atualizarInput').style.display = 'block';
+            document.getElementById('resetarInput').style.display = 'none';
+            document.getElementById('excluirInput').style.display = 'none';
+            document.getElementById('atualizarForm').action = "{{ url_for('atualizar_jogador') }}";
+        });
+        
     </script>
 
 
