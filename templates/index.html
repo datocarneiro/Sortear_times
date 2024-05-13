@@ -45,9 +45,6 @@
         <button class="botao-sortear" type="submit" name="sortear_times">Sortear Times</button>
     </form>
 
-
-    
-
     <table border="1">
         <tr class="cabecalho">
             <th>Nome</th>
@@ -90,7 +87,7 @@
         </tr>
         {% endfor %}
     </table>
-
+    
     <form id="atualizarForm" method="POST" action="{{ url_for('atualizar_jogador') }}">
         <button type="submit" name="acao" value="atualizar_jogador" class="btatualizar">Atualizar Jogador</button>
         <div id="atualizarInput" style="display: none;">
@@ -104,12 +101,13 @@
             <select name="novo_nivel" id="novo_nivel" required>
                 {% for i in range(1, 11) %}
                     <option value="{{ i }}">{{ i }}</option> 
+                {% endfor %}
             </select>
             <input type="password" name="senhaatualizar" id="senhaatualizar" required placeholder="Digite a senha" class="senha">
             <span id="atualizarSenhaAlerta" style="color: red; display: none;">Senha Inválida.</span>
         </div>        
     </form>  
-    <!-- BOTOÕES FUNCIONAIS , DAR MAIS UM CRTL+Z*/ -->
+
     <form id="resetarForm" method="POST" action="{{ url_for('resetar_status') }}">
         <button type="submit" name="acao" value="resetar" class="btresetar">Resetar Status</button>
         <div id="resetarInput" style="display: none;">        
@@ -150,7 +148,7 @@
 
             if (senhaDigitada !== senhaCorreta) {
                 document.getElementById('atualizarSenhaAlerta').style.display = 'inline';
-                return false;  // Impede o envio do formulário
+                return false; // Impede o envio do formulário
             } else {
                 document.getElementById('atualizarSenhaAlerta').style.display = 'none'; // Oculta o alerta de senha incorreta
                 return true;  // Permite o envio do formulário para o backend

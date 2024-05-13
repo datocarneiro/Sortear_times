@@ -136,6 +136,7 @@ table{
   border-radius: 4px;
   margin-top: 8px;
   margin-left: 6px;
+  margin-bottom: 5px;
   color: white;
   width: 80px;
   white-space: nowrap; /* Evita que o texto quebre para uma nova linha */
