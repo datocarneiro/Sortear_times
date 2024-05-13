@@ -69,6 +69,56 @@ def index():
     aviso = request.args.get('aviso')  # Obtém o aviso da URL, se houver
     return render_template('index.html', jogadores=jogadores, aviso=aviso)
 
+# ************************************************** ATUALIZAR JOGADOR **************************************************
+@app.route('/atualizar_jogador', methods=['POST'])
+def atualizar_jogador():
+    if request.method == 'POST':
+        # Obter os dados do formulário
+        nome_jogador = request.form['nomeAtualizar']
+        nova_posicao = request.form['nova_posicao']
+        novo_nivel = request.form['novo_nivel']
+        senha_digitada = request.form.get('senhaatualizar')
+
+        print('nomeAtualizar')
+        print('nova_posicao')
+        print('novo_nivel')
+        print('senhaatualizar')
+
+        if senha_digitada == senha_correta:
+            # Tentativa de conexão
+            try:
+                # Conectar ao banco de dados
+                conexao = psycopg2.connect(
+                    dbname=dbname,
+                    user=user,
+                    password=password,
+                    host=host,
+                    port=port
+                )
+                print("Conexão estabelecida com sucesso AO BANCO DE DADOS!")
+
+                # Criar um cursor para executar comandos SQL
+                cursor = conexao.cursor()
+
+                # Atualizar os dados do jogador no banco de dados
+                comando = 'UPDATE jogador SET posicao = %s, nivel = %s WHERE nomeJogador = %s'
+                cursor.execute(comando, (nova_posicao, novo_nivel, nome_jogador))
+
+                # Confirmar a transação
+                conexao.commit()
+
+                # Fechar o cursor e a conexão
+                cursor.close()
+                conexao.close()
+
+            except psycopg2.Error as e:
+                print("Erro ao conectar ao BANCO DE DADOS:", e)
+
+    # Após atualizar os dados do jogador, redirecionar para a página inicial ou para onde desejar
+    return redirect(url_for('index'))
+
+
+
 # ********************************************************** **INSERT JOGADOR ***********************************************
 @app.route('/adicionar_jogador', methods=['POST'])
 def adicionar_jogador():
