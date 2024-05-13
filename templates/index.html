@@ -103,8 +103,7 @@
             </select> 
             <select name="novo_nivel" id="novo_nivel" required>
                 {% for i in range(1, 11) %}
-                    <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
+                    <option value="{{ i }}">{{ i }}</option> 
             </select>
             <input type="password" name="senhaatualizar" id="senhaatualizar" required placeholder="Digite a senha" class="senha">
             <span id="atualizarSenhaAlerta" style="color: red; display: none;">Senha Inválida.</span>
