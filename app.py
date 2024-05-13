@@ -72,7 +72,7 @@ def index():
 # ************************************************** ATUALIZAR JOGADOR **************************************************
 @app.route('/atualizar_jogador', methods=['POST'])
 def atualizar_jogador():
-    if request.method == 'POST':
+    if request.method == 'POST': 
         # Obter os dados do formulário
         nome_jogador = request.form['nomeAtualizar']
         nova_posicao = request.form['nova_posicao']
