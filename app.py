@@ -74,10 +74,15 @@ def index():
 def atualizar_jogador():
     if request.method == 'POST':
         # Obter os dados do formulário
-        nome_jogador = request.form['nome']
+        nome_jogador = request.form['nomeAtualizar']
         nova_posicao = request.form['nova_posicao']
         novo_nivel = request.form['novo_nivel']
-        senha_digitada = request.form.get('senha')
+        senha_digitada = request.form.get('senhaatualizar')
+
+        print('nomeAtualizar')
+        print('nova_posicao')
+        print('novo_nivel')
+        print('senhaatualizar')
 
         if senha_digitada == senha_correta:
             # Tentativa de conexão
