@@ -8,9 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELITE FC</title>
     <style>
-        .Pendente { background-color: #f4f476; }   <!--Amarelo-->
-        .Fora { background-color: #ff7575; }       <!--Vermelho-->
-        .Dentro { background-color: #1a7c1a;color: white; }     <!--Verde-->
+        /* Comentários em CSS são feitos com /* */
+        /* Utilize o formato correto: /* Seu comentário aqui */ */
+        .Pendente { background-color: #f4f476; }   /* Amarelo */
+        .Fora { background-color: #ff7575; }       /* Vermelho */
+        .Dentro { background-color: #1a7c1a;color: white; }     /* Verde */
     </style>
 </head>
 <body>
@@ -23,16 +25,9 @@
             <input type="text" id="nome" name="nome" required>
             <label for="nivel">Nível:</label>
             <select id="nivel" name="nivel" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                {% for i in range(1, 11) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="form-row">
@@ -49,36 +44,6 @@
     <form method="POST" action="{{ url_for('sortear') }}">
         <button class="botao-sortear" type="submit" name="sortear_times">Sortear Times</button>
     </form>
-
-
-    <form id="atualizarForm" method="POST" action="{{ url_for('atualizar_jogador') }}">
-        <button type="submit" name="acao" value="atualizar" class="btatualizar">Atualizar Jogador</button>
-        <div id="atualizarInput" style="display: none;">
-            <input type="text" name="nome" id="nome" required placeholder="Digite o nome do jogador">
-            <select name="nova_posicao" id="nova_posicao" required>
-                <option value="Zagueiro">Zagueiro</option>
-                <option value="Meia">Meia</option>
-                <option value="Atacante">Atacante</option>
-                <option value="Goleiro">Goleiro</option>                              
-            </select> 
-            <select name="novo_nivel" id="novo_nivel" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
-            <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
-            <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
-        </div>        
-    </form>  
-    
-
 
     <table border="1">
         <tr class="cabecalho">
@@ -122,65 +87,106 @@
         </tr>
         {% endfor %}
     </table>
-    <!-- BOTOÕES FUNCIONAIS , DAR MAIS UM CRTL+Z*/ -->
-    <form id="acaoForm" method="POST" action="{{ url_for('resetar_status') }}">
+    
+    <form id="atualizarForm" method="POST" action="{{ url_for('atualizar_jogador') }}">
+        <button type="submit" name="acao" value="atualizar_jogador" class="btatualizar">Atualizar Jogador</button>
+        <div class="form-row" id="atualizarInput" style="display: none;">
+            <input type="text" name="nomeAtualizar" id="nomeAtualizar" required placeholder="Digite o nome do jogador">
+            <select name="nova_posicao" id="nova_posicao" required>
+                <option value="Zagueiro">Zagueiro</option>
+                <option value="Meia">Meia</option>
+                <option value="Atacante">Atacante</option>
+                <option value="Goleiro">Goleiro</option>                              
+            </select> 
+            <select name="novo_nivel" id="novo_nivel" required>
+                {% for i in range(1, 11) %}
+                    <option value="{{ i }}">{{ i }}</option> 
+                {% endfor %}
+            </select>
+            <input type="password" name="senhaatualizar" id="senhaatualizar" required placeholder="Digite a senha" class="senha">
+            <span id="atualizarSenhaAlerta" style="color: red; display: none;">Senha Inválida.</span>
+        </div>        
+    </form>  
+
+    <form id="resetarForm" method="POST" action="{{ url_for('resetar_status') }}">
         <button type="submit" name="acao" value="resetar" class="btresetar">Resetar Status</button>
-        <div id="resetarInput" style="display: none;">        
-            <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
-            <span id="senhaAlerta" style="color: red; display: none;">Senha Inválida. Tente novamente.</span>
+        <div class="form-row" id="resetarInput" style="display: none;">        
+            <input type="password" name="senha" id="resetarSenha" required placeholder="Digite a senha" class="senha">
+            <span id="resetarSenhaAlerta" style="color: red; display: none;">Senha Inválida.</span>
         </div>
     </form>  
 
-    <form id="acaoForm" method="POST" action="{{ url_for('excluir_jogador') }}">
+    <form id="excluirForm" method="POST" action="{{ url_for('excluir_jogador') }}">
         <button type="submit" name="acao" value="excluir" class="btexcluir">Excluir Jogador</button>
-        <div id="excluirInput" style="display: none;">
-            <input type="text" name="nome" id="nome" required placeholder="Digite o nome do jogador">
-            <input type="password" name="senha" id="senha" required placeholder="Digite a senha" class="senha">
-            <span id="nomeAlerta" style="color: red; display: none;">Por favor, informe o nome do jogador.</span>
+        <div class="form-row" id="excluirInput" style="display: none;">
+            <input type="text" name="nome" id="excluirNome" required placeholder="Digite o nome do jogador">
+            <input type="password" name="senha" id="excluirSenha" required placeholder="Digite a senha" class="senha">
+            <span id="excluirNomeAlerta" style="color: red; display: none;">Por favor, informe o nome do jogador.</span>
+            <span id="excluirSenhaAlerta" style="color: red; display: none;">Senha Inválida.</span>
         </div>        
     </form>  
+
     <script>
-        document.getElementById("acaoForm").onsubmit = function() {
-            var acao = document.querySelector('button[name="acao"]:hover').value; // Botão atualmente selecionado
-            var senhaDigitada = document.getElementById('senha').value;
+        document.querySelector('.btexcluir').addEventListener('click', function() {
+            document.getElementById('excluirInput').style.display = 'block';
+            document.getElementById('excluirForm').action = "{{ url_for('excluir_jogador') }}";
+        });
+
+        document.querySelector('.btresetar').addEventListener('click', function() {
+            document.getElementById('resetarInput').style.display = 'block';
+            document.getElementById('resetarForm').action = "{{ url_for('resetar_status') }}";
+        });
+
+        document.querySelector('.btatualizar').addEventListener('click', function() {
+            document.getElementById('atualizarInput').style.display = 'block';
+            document.getElementById('atualizarForm').action = "{{ url_for('atualizar_jogador') }}";
+        });
+
+        document.getElementById("atualizarForm").onsubmit = function() {
+            var senhaDigitada = document.getElementById('senhaatualizar').value;
             var senhaCorreta = "123"; // Sua senha correta
 
             if (senhaDigitada !== senhaCorreta) {
-                document.getElementById('senhaAlerta').style.display = 'inline';
-                document.getElementById('senha').value = ''; // Limpa o campo senha
-                return false;  // Impede o envio do formulário
+                document.getElementById('atualizarSenhaAlerta').style.display = 'inline';
+                return false; // Impede o envio do formulário
             } else {
-                if (acao === 'excluir') {
-                    var nomeJogador = document.getElementById('nome').value;
-                    if (!nomeJogador) {
-                        document.getElementById('nomeAlerta').style.display = 'inline';
-                        return false;  // Impede o envio do formulário
-                    }
-                }
+                document.getElementById('atualizarSenhaAlerta').style.display = 'none'; // Oculta o alerta de senha incorreta
                 return true;  // Permite o envio do formulário para o backend
             }
         };
 
-        document.querySelector('.btexcluir').addEventListener('click', function() {
-            document.getElementById('excluirInput').style.display = 'block';
-            document.getElementById('resetarInput').style.display = 'none';
-            document.getElementById('acaoForm').action = "{{ url_for('excluir_jogador') }}";
-        });
+        document.getElementById("excluirForm").onsubmit = function() {
+            var senhaDigitada = document.getElementById('excluirSenha').value;
+            var senhaCorreta = "123"; // Sua senha correta
 
-        document.querySelector('.btresetar').addEventListener('click', function() {
-            document.getElementById('resetarInput').style.display = 'none';
-            document.getElementById('resetarInput').style.display = 'block';
-            document.getElementById('acaoForm').action = "{{ url_for('resetar_status') }}";
-        });
-        document.querySelector('.btatualizar').addEventListener('click', function() {
-            document.getElementById('atualizarInput').style.display = 'block';
-            document.getElementById('resetarInput').style.display = 'none';
-            document.getElementById('excluirInput').style.display = 'none';
-            document.getElementById('atualizarForm').action = "{{ url_for('atualizar_jogador') }}";
-        });
+            if (senhaDigitada !== senhaCorreta) {
+                document.getElementById('excluirSenhaAlerta').style.display = 'inline';
+                return false;  // Impede o envio do formulário
+            } else {
+                document.getElementById('excluirSenhaAlerta').style.display = 'inline'; // Oculta o alerta de senha incorreta
+                var nomeJogador = document.getElementById('excluirNome').value;
+                if (!nomeJogador) {
+                    document.getElementById('excluirNomeAlerta').style.display = 'inline';
+                    return false;  // Impede o envio do formulário
+                } else {
+                    document.getElementById('excluirNomeAlerta').style.display = 'none'; // Oculta o alerta de nome de jogador vazio
+                    return true;  // Permite o envio do formulário para o backend
+                }
+            }
+        };
         
+        document.getElementById("resetarForm").onsubmit = function() {
+            var senhaDigitada = document.getElementById('resetarSenha').value;
+            var senhaCorreta = "123"; // Sua senha correta
+
+            if (senhaDigitada !== senhaCorreta) {
+                document.getElementById('resetarSenhaAlerta').style.display = 'inline';
+                return false;  // Impede o envio do formulário
+            } else {
+                document.getElementById('resetarSenhaAlerta').style.display = 'none'; // Oculta o alerta de senha incorreta
+                return true;  // Permite o envio do formulário para o backend
+            }
+        };
     </script>
-
-
 </body>
 </html>

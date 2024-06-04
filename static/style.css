@@ -66,8 +66,8 @@ hr {
   background-color: #1a7c1a; /* verde */
   color: white;
   margin: 7px;
-  margin-left: 30px;
-  padding: 7px 130px;
+  margin-left: 20px;
+  padding: 7px 115px;
   border: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -97,19 +97,19 @@ hr {
 /* Estilo para as linhas do formulário */
 .formadd .form-row {
   display: flex;
-  margin-bottom: 1px; /* Espaço entre as linhas */
+  margin-bottom: 3px; /* Espaço entre as linhas */
 }
 
 /* Estilo para as etiquetas */
 .formadd label {
-  margin-right: 10px;
+  margin-right: 3px;
 }
 
 /* Estilo para os campos de entrada */
 /* Estilo para os campos de entrada e o botão */
 .formadd input{
   margin-right: 8px;
-  padding: 4px 20px;}
+  padding: 4px 12px;}
 .formadd select{
     margin-right: 20px;
     padding: 4px 8px;
@@ -117,7 +117,7 @@ hr {
 .btadd{
   background-color: #000000; /* verde */
   color: white;
-  padding: 7px 25px;
+  padding: 7px 14px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -128,25 +128,35 @@ hr {
 table{
   width: 90%;
 }
-.btexcluir, .btresetar {
+
+.btexcluir, .btresetar, .btatualizar {
   font-size: 9px;
-  padding: 5px 10px; /* Reduzi o padding para tornar os botões menores */
+  padding: 5px 5px; /* Reduzi o padding para tornar os botões menores */
   border: none;
-  border-radius: 5px;
-  margin: 5px;
+  border-radius: 4px;
+  margin-top: 8px;
+  margin-left: 6px;
+  margin-bottom: 5px;
   color: white;
-  display: flex;
-  width: 80px; 
+  width: 80px;
   white-space: nowrap; /* Evita que o texto quebre para uma nova linha */
 }
+
 .btexcluir {
   background-color: rgb(255, 0, 0);
-  border: 1px solid #6d1c1c; 
+  border: 1px solid #6d1c1c;
 }
-.btresetar{
-    background-color: #164d72; /* Cor de fundo do botão */
-    color: #fff; /* Cor do texto do botão */
-    border: 1px solid #023658; 
+
+.btresetar {
+  background-color: #164d72; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: 1px solid #023658; 
+}
+
+.btatualizar {
+  background-color: #000000; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: 1px solid #023658; 
 }
 
 
@@ -161,4 +171,6 @@ td form {
 .confirmar {
   margin-left: 5px; /* Ajuste conforme necessário */
 }
-
+input{
+  margin: 3px;
+}
