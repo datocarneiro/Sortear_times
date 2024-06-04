@@ -18,8 +18,6 @@ host = getenv('PGHOST')
 port = getenv('PGPORT')
 
 senha_correta = "123" # 
-
-# # ****************************** ROTAS PRONTAS **************************************
 app = Flask(__name__)
 
 def carregar_jogadores():
