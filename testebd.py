@@ -1,24 +1,44 @@
 import psycopg2
 from psycopg2 import OperationalError
 
-def create_connection():
-    try:
-        # Formato da URL de conexão:
-        # postgresql://usuario:senha@host:porta/nome_do_banco
-        connection_url = (
-            "postgres://root:aYc0oP9i6HDTvrhHPcGs3xobfkgV7IVK@dpg-cp7tpcsf7o1s73el4h40-a/database_elitefc"
-        )
-        
-        # Conectando ao banco de dados usando a URL
-        connection = psycopg2.connect(connection_url)
-        print("Conexão com o banco de dados bem-sucedida")
-        return connection
-    except OperationalError as e:
-        print(f"Erro ao conectar ao BANCO DE DADOS: {e}")
-        return None
+# Dados de conexão com o banco de dados
+dbname = "elitefc"
+user = "dato"
+password = "1234"
+host = "localhost"
 
-# Testando a conexão
-conn = create_connection()
-if conn:
-    # Fechar a conexão se for bem-sucedida
-    conn.close()
+# Comando SQL para criar a tabela
+create_table_query = '''
+CREATE SCHEMA IF NOT EXISTS elitefc;
+
+CREATE TABLE elitefc.jogador(
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    posicao VARCHAR(50) NOT NULL,
+    nivel INTEGER CHECK (nivel BETWEEN 1 AND 10) NOT NULL,
+    status BOOLEAN DEFAULT TRUE
+);
+'''
+connection = None
+
+try:
+    # Conectar ao banco de dados
+    connection = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
+    cursor = connection.cursor()
+    
+    # Executar o comando SQL para criar a tabela
+    cursor.execute(create_table_query)
+    
+    # Commit para salvar as alterações
+    connection.commit()
+    
+    print("Tabela 'jogador' criada com sucesso!")
+
+except OperationalError as e:
+    print(f"Erro ao conectar ao banco de dados: {e}")
+
+finally:
+    # Fechar a conexão
+    if connection:
+        cursor.close()
+        connection.close()
